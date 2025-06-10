@@ -1,8 +1,10 @@
 package com.hugosantos.feiralink.config;
 
+import com.hugosantos.feiralink.model.entities.Category;
 import com.hugosantos.feiralink.model.entities.Client;
 import com.hugosantos.feiralink.model.entities.Order;
 import com.hugosantos.feiralink.model.entities.enums.OrderStatus;
+import com.hugosantos.feiralink.repositories.CategoryRepository;
 import com.hugosantos.feiralink.repositories.OrderRepository;
 import com.hugosantos.feiralink.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void run(String... args) throws Exception {
         Client u1 = new Client(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
@@ -32,7 +37,16 @@ public class TestConfig implements CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
         Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1);
 
+        Category cat1 = new Category(null, "Carnes");
+        Category cat2 = new Category(null, "Peixes");
+        Category cat3 = new Category(null, "Frutas e Verduras");
+        Category cat4 = new Category(null, "Ervas");
+        Category cat5 = new Category(null, "Farinhas");
+        Category cat6 = new Category(null, "Polpas e Frutas");
+        Category cat7 = new Category(null, "Refeições");
+
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
     }
 }
