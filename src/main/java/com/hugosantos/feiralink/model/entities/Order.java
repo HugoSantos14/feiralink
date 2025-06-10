@@ -1,6 +1,7 @@
 package com.hugosantos.feiralink.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hugosantos.feiralink.model.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,6 +19,8 @@ public class Order {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
+    private Integer status;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
@@ -25,9 +28,18 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, Instant moment, Client client) {
+    public Order(Long id, Instant moment, OrderStatus status, Client client) {
         this.id = id;
         this.moment = moment;
+        setStatus(status);
         this.client = client;
+    }
+
+    public OrderStatus getStatus() {
+        return OrderStatus.valueOf(status);
+    }
+
+    public void setStatus(OrderStatus status) {
+        if (status != null) this.status = status.getCode();
     }
 }
